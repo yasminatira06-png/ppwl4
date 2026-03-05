@@ -42,6 +42,23 @@ const app = new Elysia()
     }
   })
 
+ // praktikum 7
+ // Assignment Route
+.get("/user", () => {
+  return {
+    id: 1,
+    name: "Atira",
+    role: "admin"
+  }
+})
+
+.get("/user/:id", ({ params }) => {
+  return {
+    message: "detail user",
+    id: params.id
+  }
+})
+
   .listen(3000)
 
 console.log("Server running at http://localhost:3000")
