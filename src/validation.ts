@@ -39,6 +39,23 @@ const app = new Elysia()
     }
   )
 
+//praktikum3
+.get(
+  "/stats",
+  () => {
+    return {
+      total: 100,
+      active: 80
+    }
+  },
+  {
+    response: t.Object({
+      total: t.Number(),
+      active: t.Number()
+    })
+  }
+)
+
 .listen(3000)
 
 console.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`);
