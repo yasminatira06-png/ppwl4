@@ -1,4 +1,4 @@
-import { Elysia } from "elysia"
+import { Elysia, t } from "elysia"
 import { openapi } from "@elysiajs/openapi"
 
 const app = new Elysia()
@@ -43,21 +43,38 @@ const app = new Elysia()
   })
 
  // praktikum 7
- // Assignment Route
-.get("/user", () => {
-  return {
-    id: 1,
-    name: "Atira",
-    role: "admin"
-  }
-})
+// Custom Validation Error
+  .onError(({ code, set }) => {
+    if (code === "VALIDATION") {
+      set.status = 400
+      return {
+        success: false,
+        error: "Validation Error"
+      }
+    }
+  })
 
-.get("/user/:id", ({ params }) => {
-  return {
-    message: "detail user",
-    id: params.id
-  }
-})
+  // Endpoint login
+  .post(
+    "/login",
+    ({ body }) => {
+      return {
+        message: "Login berhasil",
+        email: body.email
+      }
+    },
+    {
+      body: t.Object({
+        email: t.String({
+          format: "email"
+        }),
+        password: t.String({
+          minLength: 8
+        })
+      })
+    }
+  )
+
 
   .listen(3000)
 
