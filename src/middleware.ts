@@ -4,6 +4,16 @@ import { openapi } from "@elysiajs/openapi"
 const app = new Elysia()
   .use(openapi())
 
+  // Praktikum 6 - Global afterHandle
+  .onAfterHandle(({ response }) => {
+    return {
+      success: true,
+      message: "data tersedia",
+      data: response
+    }
+  })
+
+  // Praktikum 5
   .get(
     "/admin",
     () => {
@@ -23,6 +33,14 @@ const app = new Elysia()
       }
     }
   )
+
+  // Endpoint product
+  .get("/product", () => {
+    return {
+      id: 1,
+      name: "Laptop"
+    }
+  })
 
   .listen(3000)
 
